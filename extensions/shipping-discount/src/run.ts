@@ -8,7 +8,18 @@ import {
 } from "../generated/api";
 
 export function run(input: RunInput): FunctionRunResult {
-  const targets: Target[] = input.cart.cost.totalAmount.amount;
+  const cartTotal: number = parseFloat(input.cart.cost.totalAmount.amount);
+
+  const targets: Target[] = input.cart.deliveryGroups.map(group => ({
+    "deliveryGroup": {
+      "id": group.id
+    }
+  }));
+
+  const EMPTY_DISCOUNT: FunctionRunResult = {
+    discountApplicationStrategy: DiscountApplicationStrategy.First,
+    discounts: [],
+  };
 
   const DISCOUNTED_SHIPPING: FunctionRunResult = {
     discountApplicationStrategy: DiscountApplicationStrategy.First,
@@ -24,5 +35,10 @@ export function run(input: RunInput): FunctionRunResult {
       }
     ]
   }
-  return DISCOUNTED_SHIPPING;
+
+  if (cartTotal > 50) {
+    return DISCOUNTED_SHIPPING;
+  } else {
+    return EMPTY_DISCOUNT;
+  }
 };

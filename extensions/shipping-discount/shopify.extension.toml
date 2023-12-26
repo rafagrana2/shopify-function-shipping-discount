@@ -2,7 +2,7 @@ api_version = "2023-10"
 
 [[extensions]]
 handle = "shipping-discount"
-name = "t:name"
+name = "Shipping Discount"
 description = "t:description"
 type = "function"
 

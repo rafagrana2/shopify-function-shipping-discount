@@ -1,5 +1,8 @@
 query RunInput {
   cart {
+    deliveryGroups {
+      id
+    }
     cost {
       totalAmount {
         amount
